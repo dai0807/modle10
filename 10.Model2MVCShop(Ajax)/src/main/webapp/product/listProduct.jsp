@@ -279,9 +279,7 @@
 		
 				<td align="left"  class = "produc_no" value1="${product.prodNo}"  value2="${product.proTranCode}">
 				
-						
-			<!--  	<a href="${ menu == 'search' ? '/product/getProduct' : '/product/updateProductView'}?prodNo=${product.prodNo }&menu=${ menu }&tranCode=${product.proTranCode}">
-							${ product.prodName }</a>  -->
+ 
 							
 						${ product.prodName }	
 				</td> 
@@ -297,7 +295,7 @@
  				 		
 				<c:if test = "${product.proTranCode eq'002'}">
 				구매완료 &nbsp; &nbsp; 
-					<span  id ="span_prodNo" value ="${product.prodNo}" > [ 배송하기 ]</span>	
+				<!-- 	<span  id ="span_prodNo" value ="${product.prodNo}" > [ 배송하기 ]</span>	  --> 
 						 
 				
 				</c:if>

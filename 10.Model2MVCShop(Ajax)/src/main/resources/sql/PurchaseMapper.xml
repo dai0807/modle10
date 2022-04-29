@@ -29,6 +29,8 @@
 			<result property="fileName" column="image_file" jdbcType="VARCHAR"/>
 			<result property="regDate" column="prod_reg_date" jdbcType="DATE"/>
 			<result property="proTranCode" column="TRAN_STATUS_CODE" jdbcType="VARCHAR"/>
+			<result property="quantity" 			 column="quantity" 				jdbcType="NUMERIC" />
+			
 		</association>
 		
 		<association property="buyer"  javaType="user">
