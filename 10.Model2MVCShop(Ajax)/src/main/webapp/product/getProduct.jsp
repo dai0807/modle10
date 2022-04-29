@@ -95,7 +95,10 @@
 		</td>
 		<td bgcolor="D6D6D6" width="1"></td>
 		<td class="ct_write01">
-			${ Product.fileName }
+		
+			<img src="../images/uploadFiles/${Product.fileName }" >
+		
+	<!--		${ Product.fileName }  -->
 		</td>
 	</tr>
 	<tr>

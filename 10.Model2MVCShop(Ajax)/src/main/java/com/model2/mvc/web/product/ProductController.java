@@ -1,7 +1,9 @@
 package com.model2.mvc.web.product;
 
+import java.io.File;
 import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.model2.mvc.common.Page;
@@ -42,7 +46,11 @@ public class ProductController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
- 	
+
+	
+    @Resource(name="uploadPath")
+    String uploadPath;
+	
 	public ProductController(){
 		System.out.println(this.getClass());
 	}
@@ -70,17 +78,41 @@ public class ProductController {
 	
 	//@RequestMapping("/addProduct.do") // d이건 다시 하기! ,,,, 데이터가 운다 울어 너는 왜 못가고 있니 
 	@RequestMapping( value="addProduct" , method=RequestMethod.POST)
-	public String addProduct( @ModelAttribute("product1 ") Product  product1 , Model model    ) throws Exception {
+	public String addProduct( @ModelAttribute("product1 ") Product  product1 , Model model  , @RequestParam ("fileInfo" )  MultipartFile file   ) throws Exception {
 
 
 		System.out.println("add Product View + product ::  제조일자 변경전 " + product1 );
 		product1.setManuDate(product1.getManuDate().replaceAll("-", "")) ;  // 제조일자 
 		System.out.println("add Product View + product ::  제조일자 변경 후 " + product1 );
 
+		 String fileName = file.getOriginalFilename();
+		  System.out.println("파일이름" + file.getOriginalFilename());
+		 
+		
+		
+		  if(!file.getOriginalFilename().isEmpty()) {
+				file.transferTo(new File(uploadPath, file.getOriginalFilename()));
+				model.addAttribute("msg", "File uploaded successfully.");
+				System.out.println("성공 ");
+			}else {
+				model.addAttribute("msg", "Please select a valid mediaFile..");
+				System.out.println("실패  ");
+
+				
+			}
+			
+		product1.setFileName(fileName);
+		
+		
+		
+		
+		
+		
+		
 		productService.addProduct(product1) ;
 		//Business Logic
  		
-		
+  
  		model.addAttribute("product1", product1);
 
 		return "forward:/product/addgetProduct.jsp";
