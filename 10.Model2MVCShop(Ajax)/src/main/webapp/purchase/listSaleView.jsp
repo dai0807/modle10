@@ -50,7 +50,7 @@ function fncGetList(currentPage){
  			
  			
  			
-		$("#span_prodNo").on("click", function(){
+		$("#span_tranNo").on("click", function(){
 			
 			
 			console.log(" tranNo 제대로 나온요  " + $(this).attr("value")   );
@@ -59,8 +59,9 @@ function fncGetList(currentPage){
 
 			 console.log( "currentPage  ::  " +currendPage );
 			 
+			self.location ="/purchase/updateTranCode?currentPage="+currendPage+"&tranNo="+$(this).attr("value")+"&tranCode=003"  ; 
 
-			  self.location ="/product/updateProdcutTranCodeByProd?currentPage="+currendPage+"&prodNo="+$(this).attr("value")+"&tranCode=003&menu=manage" ;
+		//	  self.location ="/product/updateProdcutTranCodeByProd?currentPage="+currendPage+"&prodNo="+$(this).attr("value")+"&tranCode=003&menu=manage" ;
 			 //여기 부분 보안하기 !! 눈물이 차올라거 고개를 쳐 들었다. 그렇게 눈물이 흘렀다. 
 			 
 			
@@ -161,7 +162,7 @@ function fncGetList(currentPage){
 					</c:if>		 			
 					 <c:if test = "${ purchase.tranCode eq'002'}">
 							<td align="left"> 구매완료 &nbsp; &nbsp; 
-			 					<span  id ="span_prodNo" value ="${product.prodNo}" > [ 배송하기 ]</span>	
+			 					<span  id ="span_tranNo" value ="${purchase.tranNo}" > [ 배송하기 ]</span>	
 		 					</td>
 					</c:if>
 					<c:if test ="${ purchase.tranCode eq'003'}">

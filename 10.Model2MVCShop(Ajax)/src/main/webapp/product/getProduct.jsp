@@ -138,6 +138,19 @@
 	<tr>
 		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
 	</tr>
+	
+	<tr>
+		<td width="104" class="ct_write">
+			¼ö·® <img  src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
+		</td>
+		<td bgcolor="D6D6D6" width="1"></td>
+		<td class="ct_write01">${Product.quantity}  </td>
+	</tr>
+	<tr>
+		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
+	</tr>
+	
+	
 </table>
  <input type="hidden" id=prodNo   value="${Product.prodNo}"/>
 
@@ -148,7 +161,10 @@
 
 		<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
-			 <c:if test = "${tranCode eq '000'}">
+ 			 <c:if test = "${userId ne 'admin'}">
+ 			 <c:if test = "${userId ne ''}">
+ 			
+			 <c:if test = "${Product.quantity ne 0}">
 		
 					<td width="17" height="23">
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
@@ -166,6 +182,10 @@
 					
 					<td width="30"></td>
 			</c:if>
+					
+			</c:if>
+ 			</c:if>
+ 			
 					<td width="17" height="23">
 						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 					</td>

@@ -78,7 +78,8 @@
 				 
 				//  self.location = pageNAME + "?prodNo="+ $(".ct_list_pop  td:nth-child(1)").val() + "&menu="+$("#menu").val() +"&tranCode=" + $(".ct_list_pop  td:nth-child(3)").val() 
 				  
-		        self.location = pageNAME + "?prodNo="+jprodNo+"&menu="+$("#menu").val() +"&tranCode=" + jproTranCode  ; 
+		        self.location = pageNAME + "?prodNo="+jprodNo+"&menu="+$("#menu").val()   ; 
+//		        self.location = pageNAME + "?prodNo="+jprodNo+"&menu="+$("#menu").val() +"&tranCode=" + jproTranCode  ; 
 				
 			});
 			
@@ -96,7 +97,7 @@
 				//  self.location = pageNAME + "?prodNo="+ $(".ct_list_pop  td:nth-child(1)").val() + "&menu="+$("#menu").val() +"&tranCode=" + $(".ct_list_pop  td:nth-child(3)").val() 
 					 $.ajax( 
 								{
-									url : "/product/json/getProduct/"+jprodNo+"/"+jproTranCode,
+									url : "/product/json/getProduct/"+jprodNo
 									method : "GET" ,
 									dataType : "json" ,
 									headers : {
@@ -246,13 +247,11 @@
 		<td class="ct_list_b" width="150">가격</td>
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">등록일</td>	
-	 <c:if test="${menu eq 'manage'}"> <!--매ㅣ저일때 상태 보이게 하기   -->
-		
+ 		
 		<td class="ct_line02"></td>
 	
-				<td class="ct_list_b">현재상태</td>	
-		</c:if>
-	</tr>
+				<td class="ct_list_b"> 수량 </td>	
+ 	</tr>
 	<tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
 	</tr>
@@ -288,14 +287,17 @@
 		<td align="left">${product.price}</td>
 		<td></td>
 		<td align="center">${product.regDate}	</td>
-		<td></td>	
+		<td></td>
+		
+					<td align="center">${product.quantity}	</td>
 			
-		  <c:if test="${menu eq 'manage'}"> <!--매ㅣ저일때 상태 보이게 하기   -->
+		<!-- 
+		  <c:if test="${menu eq 'manage'}">  
 			 	<td align="left" class ="tranCode"   value ="${product.prodNo}" >
  				 		
 				<c:if test = "${product.proTranCode eq'002'}">
 				구매완료 &nbsp; &nbsp; 
-				<!-- 	<span  id ="span_prodNo" value ="${product.prodNo}" > [ 배송하기 ]</span>	  --> 
+				 	<span  id ="span_prodNo" value ="${product.prodNo}" > [ 배송하기 ]</span>	 
 						 
 				
 				</c:if>
@@ -310,7 +312,7 @@
 
 
 			</c:if>
-
+ --> 
 		<td></td>		
 	</tr>
 	<tr>

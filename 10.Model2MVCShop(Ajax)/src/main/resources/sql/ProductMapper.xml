@@ -33,12 +33,21 @@
 	 <select id ="getProduct"  parameterType="int"  resultMap="productSelectMap">
 		SELECT prod_name,prod_detail,manufacture_day,price, image_file from product  where prod_no = #{value}
 	 </select> --> 
+	
+	<!--   수량 전 list 코드 
 		 <select 	id="getProduct"		parameterType="int"		resultMap="productSelectMap">
 		SELECT
 		p.*, NVL(t.tran_status_code,'000') pro_tran_status_code  		
 		FROM product p, transaction t 
 		WHERE  t.prod_no(+)   =   p.prod_no  AND p.prod_no =  #{value}
 	 </select> 
+	 -->
+		 <select 	id="getProduct"		parameterType="int"		resultMap="productSelectMap">
+		SELECT * from 
+		product 
+		WHERE  prod_no =  #{value}
+	 </select> 	 
+	 
 	  <!-- SQL : 트랜코드 받기  아직 단위 테스트 안함 -->
 	 <select id ="getTrandCode"  parameterType="int" resultType="int">
 		 SELECT tran_no  FROM transaction WHERE prod_no = #{value}
@@ -58,10 +67,19 @@
 		WHERE prod_no = #{prodNo}
 	 </update>
 	 
+ 	 <update id = "minusQuantity" parameterType="product" >
+		 UPDATE product
+			 <set>
+			 quantity 		= #{quantity} 
+			 </set>
+		WHERE prod_no = #{prodNo}
+	 </update>
 	 
-	 
+	  
+	
 	 
 	 <!-- SQL :: select List  -->
+	 <!--  
 	 <select id ="getProductList" parameterType="search"	resultMap="productSelectMap" >
 	  	SELECT *
 		  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
@@ -88,8 +106,60 @@
 		 	
 	 
 	 </select>
+	--> 
+	
+	
+	
+		 <select id ="getProductList" parameterType="search"	resultMap="productSelectMap" >
+	  	SELECT *
+		  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+		  					FROM		(	SELECT p.*  
+												FROM product p  
+ 													<where>
+ 													<if test="searchCondition != null">
+																<if test="searchCondition == 0 and searchKeyword !='' ">
+														 			AND p.prod_no LIKE  LIKE '%' || #{searchKeyword} || '%'
+																</if>
+																<if test="searchCondition == 1 and searchKeyword !='' ">
+														 			AND 	p.prod_name LIKE '%' || #{searchKeyword} || '%'
+																</if>
+																 <if test="searchCondition == 2 and searchKeyword !='' ">
+														 				AND p.price = #{searchKeyword}
+																</if>
+													 </if>
+															
+													</where>
+												ORDER BY p.prod_no ) inner_table
+							WHERE ROWNUM &lt;= #{endRowNum} )
+			WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+		 	
 	 
+	 </select>
+	
+		 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT  p.*  
+						FROM product p 
+ 							<where>
+ 									 <if test="searchCondition != null">
+							
+										<if test="searchCondition == 0 and searchKeyword !='' ">
+								 		AND 	p.prod_no  LIKE '%' || #{searchKeyword} || '%'
+										</if>
+										<if test="searchCondition == 1 and searchKeyword !='' ">
+ 											AND 	p.prod_name LIKE '%' || #{searchKeyword} || '%'
+										</if>
+										 <if test="searchCondition == 2 and searchKeyword !='' ">
+								 		AND  	p.price = #{searchKeyword}
+										</if>
+								</if>
+							</where>
+						 ) countTable						
+	 </select>
+	
+	
 	 	<!--  USER 아직 안바꿈 SQL : SELECT ROW Count -->	 
+	 	<!--  프로덕트 수량 전  
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
 	  	FROM(	SELECT  p.* ,  NVL(t.tran_status_code, '000')  pro_tran_status_code
@@ -102,8 +172,7 @@
 								 		AND 	p.prod_no  LIKE '%' || #{searchKeyword} || '%'
 										</if>
 										<if test="searchCondition == 1 and searchKeyword !='' ">
-								 			<!-- prod_name = #{searchKeyword} -->
-											AND 	p.prod_name LIKE '%' || #{searchKeyword} || '%'
+ 											AND 	p.prod_name LIKE '%' || #{searchKeyword} || '%'
 										</if>
 										 <if test="searchCondition == 2 and searchKeyword !='' ">
 								 		AND  	p.price = #{searchKeyword}
@@ -112,6 +181,8 @@
 							</where>
 						 ) countTable						
 	 </select>
+	 
+	  -->
 	 <!-- 
 	 
 	 	SELECT p.* ,  NVL(t.tran_status_code, '000')  pro_tran_status_code

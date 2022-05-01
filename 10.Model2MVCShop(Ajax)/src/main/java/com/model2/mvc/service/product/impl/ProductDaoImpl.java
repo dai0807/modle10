@@ -59,6 +59,12 @@ public class ProductDaoImpl implements ProductDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("ProductMapper.getTrandCode" ,prodNo);
 	}
+
+ 	public void minusQuantity(Product product) throws Exception {
+		System.out.println("minus  Qutity ¿È ");
+		  sqlSession.update("ProductMapper.minusQuantity", product);
+		
+	}
 	
 	
 	

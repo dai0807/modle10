@@ -174,7 +174,7 @@
 				</td>
 			</tr>
 			
-			<c:if test="${ !empty user && user.role == 'user'}">
+			<c:if test="${  user.role == 'user'}">
 			
 			<tr>
 				<td class="Depth03">

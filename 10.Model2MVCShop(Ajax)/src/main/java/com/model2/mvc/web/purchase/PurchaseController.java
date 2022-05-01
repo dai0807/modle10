@@ -100,14 +100,24 @@ public class PurchaseController {
 		//user.setUserId(buyerId); 
  		purchase.setBuyer(user) ;
  		System.out.println("user 나와라!! :: " + user);
+ 		product =  productService.getProduct(product.getProdNo());
+
  		
  	//	Product product =new Product() ;
  	//	product.setProdNo(prodNo) ;
  		purchase.setPurchaseProd(product) ;
+ 		purchase.setTranCode("002") ; // 구매 완료 
+ 
  		System.out.println("product 나와라!! :: " + product);
 
  		
 		purchaseService.addPurchase(purchase);
+		product.setQuantity((product.getQuantity() - 1));
+		System.out.println("quntity + "+ product.getQuantity());
+		productService.minusQuantity(product) ;
+	 
+		System.out.println("수량 변경도 끝");
+		 // productService.getProduct(prodNo);
 
 		
 		
@@ -230,12 +240,13 @@ public class PurchaseController {
 	//@RequestMapping("/updateTranCode.do")  // 데이터 받기 
 	@RequestMapping(value ="/updateTranCode" , method = RequestMethod.GET)  // 데이터 받기 
 
-	public ModelAndView updateTranCode(@ModelAttribute("search") Search search  , @RequestParam("tranNo") int tranNo  , @RequestParam("tranCode") String tranCode ,@RequestParam("currentPage") int  intcurrentPage ) throws Exception 
+	public ModelAndView updateTranCode(@ModelAttribute("search") Search search  , @RequestParam("tranNo") int tranNo  , @RequestParam("tranCode") String tranCode ,@RequestParam("currentPage") int  intcurrentPage ,   HttpServletRequest request ,  HttpSession session ) throws Exception 
 	{
 		System.out.println("updatePurchase옴 ");
 
 		System.out.println("updateTranCode :: tranNo ::  "  + tranNo  + " tranc Code :: " + tranCode );
- 
+		String buyer_id =((User)request.getSession(true).getAttribute("user")).getUserId(); // 어드민인지 확인 
+		System.out.println("role  " + buyer_id);
 		
 		Purchase purchase = purchaseService.getPurchase(tranNo);		
 		System.out.println("tranNo업뎃 전  " + purchase  );
@@ -256,7 +267,15 @@ public class PurchaseController {
 		System.out.println("update 끝! ");
 		modelAndView.addObject("search", search) ; 
 
- 		modelAndView.setViewName("/purchase/listPurchase") ;
+		if(buyer_id.equals("admin")) {
+	 		modelAndView.setViewName("/purchase/listSale") ;
+
+		}else {
+	 		modelAndView.setViewName("/purchase/listPurchase") ;
+
+		}
+
+ 		
  		return modelAndView;
 		
 	}

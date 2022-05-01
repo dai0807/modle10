@@ -33,7 +33,7 @@ import com.model2.mvc.service.user.UserService;
 @Controller
 @RequestMapping("/product/*")
 public class ProductController {
-
+// ALTER TABLE product ADD quantity number DEFAULT (10) ;
 	
 	///Field
 	@Autowired
@@ -177,7 +177,7 @@ public class ProductController {
 //	}
 //	
 		@RequestMapping(value = "getProduct" ,method=RequestMethod.GET  )
-	public String getProduct(@RequestParam("prodNo" ) int prodNo,@RequestParam("tranCode" ) String tranCode ,  Model model ,  HttpServletRequest request ,   HttpSession session ) throws Exception 
+	public String getProduct(@RequestParam("prodNo" ) int prodNo ,  Model model ,  HttpServletRequest request ,   HttpSession session ) throws Exception 
 	{
 		System.out.println("getProduct:: prodNo ::: 출력하기 " + prodNo );
 
@@ -186,19 +186,20 @@ public class ProductController {
 		
 		
 		Product product  = productService.getProduct(prodNo) ;
-		
-//		
-//		String userId =((User)request.getSession(true).getAttribute("user")).getUserId(); //유저 아이디 뽑기 
-//		User user = userService.getUser(userId);  // role이 유저만 구매하게 하려고
-//
-//		
-		
-		
-		
 		System.out.println("product ::: 출력하기 " + product );
+
+//		
+		if( request.getSession(true).getAttribute("user") != null ) {
+			String userId =((User)request.getSession(true).getAttribute("user")).getUserId(); //유저 아이디 뽑기 
+			model.addAttribute("userId" , userId ) ;
+
+		}else {
+		 	model.addAttribute("userId" ,"") ;
+
+		}
+		
+		
 		model.addAttribute("Product" , product ) ;
-		model.addAttribute("tranCode" , tranCode ) ;
-	//	model.addAttribute("user" , user ) ;
 
 	
 		return "forward:/product/getProduct.jsp";
@@ -206,8 +207,10 @@ public class ProductController {
 	
 	}
 	
-		@RequestMapping(value = "updateProductView" ,  method=RequestMethod.GET  )
-	public String updateProductView(@RequestParam("prodNo" ) int prodNo , Model model ,@RequestParam("tranCode" ) String  tranCode ) throws Exception 
+		 @RequestMapping(value = "updateProductView" ,  method=RequestMethod.GET  )
+public String updateProductView(@RequestParam("prodNo" ) int prodNo , Model model ) throws Exception 
+
+//	public String updateProductView(@RequestParam("prodNo" ) int prodNo , Model model ) throws Exception 
 	{
 		System.out.println("/updateProductView.do");
 		Product product  = productService.getProduct(prodNo) ;

@@ -67,4 +67,10 @@ public class ProductServiceImpl implements ProductService{
 			return productDao.findTrandtranNo(prodNo);
 		}
 
+		@Override
+		public void minusQuantity   (Product product ) throws Exception {
+			  productDao.minusQuantity(product);
+			
+		}
+
 	}

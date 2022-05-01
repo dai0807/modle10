@@ -22,4 +22,5 @@ public interface ProductDao {
 
 	public int findTrandtranNo(int prodNo )  throws Exception; // 트랜코드 찾기 
 
+	public void minusQuantity(Product product)  throws Exception; 
 }

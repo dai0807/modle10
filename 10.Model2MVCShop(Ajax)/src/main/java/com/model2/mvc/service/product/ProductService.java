@@ -24,6 +24,6 @@ public interface ProductService {
 	//트랜코드 찾기 
 	public int findTrandtranNo(int prodNo )  throws Exception;
 
-	
+	public void minusQuantity (Product product ) throws Exception ;
 	
 }

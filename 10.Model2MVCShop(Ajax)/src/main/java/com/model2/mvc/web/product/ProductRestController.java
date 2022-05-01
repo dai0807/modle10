@@ -59,16 +59,14 @@ public class ProductRestController {
 	int pageSize;
 	
 	//@RequestMapping("/addProductView.do")
-	@RequestMapping( value="json/getProduct/{prodNo}/{tranCode}" ,  method=RequestMethod.GET )
-	public Product getProduct(@PathVariable  int prodNo, @PathVariable String tranCode ) throws Exception {
+	@RequestMapping( value="json/getProduct/{prodNo}" ,  method=RequestMethod.GET )
+	public Product getProduct(@PathVariable  int prodNo ) throws Exception {
 
 		System.out.println("getProduct:: prodNo ::: 출력하기 " + prodNo );
 		System.out.println("/user/getProduct : get");
-		System.out.println("product ::: 출력하기 " + tranCode );
-
+ 
 		Product product  = productService.getProduct(prodNo) ;
-		product.setProTranCode(tranCode)  ;
-		System.out.println("product ::: 출력하기 " + product );
+ 		System.out.println("product ::: 출력하기 " + product );
  
 		return product;
 	}
