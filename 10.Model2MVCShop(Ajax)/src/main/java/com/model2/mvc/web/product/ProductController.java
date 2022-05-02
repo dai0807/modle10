@@ -240,7 +240,7 @@ public String updateProductView(@RequestParam("prodNo" ) int prodNo , Model mode
 	//	model.addAttribute("Product" , product ) ;
 	 	System.out.println("업데이투!! ");
 	
-		return "redirect:/product/getProduct.do?prodNo="+product.getProdNo()+"&tranCode="+product.getProTranCode();
+		return "redirect:/product/getProduct.do?prodNo="+product.getProdNo();
 		
 	
 	}	
