@@ -97,7 +97,7 @@
 				//  self.location = pageNAME + "?prodNo="+ $(".ct_list_pop  td:nth-child(1)").val() + "&menu="+$("#menu").val() +"&tranCode=" + $(".ct_list_pop  td:nth-child(3)").val() 
 					 $.ajax( 
 								{
-									url : "/product/json/getProduct/"+jprodNo
+									url : "/product/json/getProduct/"+jprodNo ,
 									method : "GET" ,
 									dataType : "json" ,
 									headers : {
@@ -144,7 +144,7 @@
 			
 			});
 			
-		 }); 
+	 }); 
 			
 	 
 </script>
